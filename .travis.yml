@@ -109,6 +109,15 @@ matrix:
             - ubuntu-toolchain-r-test
 
     - os: linux
+      env: TOOLSET=gcc COMPILER=g++-8 CXXSTD=03,11,14,17
+      addons:
+        apt:
+          packages:
+            - g++-8
+          sources:
+            - ubuntu-toolchain-r-test
+
+    - os: linux
       env: TOOLSET=clang COMPILER=clang++ CXXSTD=03,11
 
     - os: linux
@@ -190,6 +199,33 @@ matrix:
         apt:
           packages:
             - libc++-dev
+            - clang-5.0
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-5.0
+
+    - os: linux
+      compiler: clang++-6.0
+      env: TOOLSET=clang COMPILER=clang++-6.0 CXXSTD=03,11,14,1z
+      addons:
+        apt:
+          packages:
+            - clang-6.0
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-6.0
+
+    - os: linux
+      compiler: clang++-libc++
+      env: TOOLSET=clang COMPILER="clang++-6.0 -stdlib=libc++" CXXSTD=03,11,14
+      addons:
+        apt:
+          packages:
+            - clang-6.0
+            - libc++-dev
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-6.0
 
     - os: osx
       env: TOOLSET=clang COMPILER=clang++ CXXSTD=03,11,14,1z
@@ -214,6 +250,14 @@ matrix:
     - os: osx
       env: TOOLSET=clang COMPILER=clang++ CXXSTD=03,11,14,1z
       osx_image: xcode6.4
+
+     - os: linux
+      env: CMAKE_TEST_PROJECT=1
+      install: true
+      script:
+        - mkdir __build__ && cd __build__
+        - cmake ../test
+        - cmake --build .
 
 install:
   - BOOST_BRANCH=develop && [ "$TRAVIS_BRANCH" == "master" ] && BOOST_BRANCH=master || true
