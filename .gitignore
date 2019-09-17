@@ -1,1 +1,8 @@
 checks/architecture/bin
+
+.buckd
+.buckconfig.d
+.buckconfig.local
+buck-out
+bazel-*
+buckaroo
