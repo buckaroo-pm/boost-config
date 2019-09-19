@@ -5,10 +5,10 @@ buckaroo install
 if [ $BUCKAROO_USE_BAZEL ]
 then
 
-bazel build //:type_traits
+bazel build //:all
 
 else
 
-buck build -c ui.superconsole=DISABLED //:type_traits
+buck build -c ui.superconsole=DISABLED //...
 
 fi
